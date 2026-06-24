@@ -36,7 +36,7 @@ module "eks_node_group_default" {
   instance_types = ["t3.medium"]
   capacity_type  = "ON_DEMAND"
 
-  desired_size = 1
+  desired_size = 2
   min_size     = 1
   max_size     = 10
 
@@ -45,10 +45,28 @@ module "eks_node_group_default" {
 }
 
 # ##############################
+# AWS Load Balancer Controller
+# ##############################
+module "aws_load_balancer_controller" {
+  source = "../../modules/aws/aws-load-balancer-controller"
+
+  cluster_name      = module.eks.cluster_name
+  oidc_provider_arn = module.eks.oidc_provider_arn
+  oidc_provider_url = module.eks.oidc_provider_url
+  vpc_id            = module.vpc.vpc_id
+  aws_region        = var.aws_region
+  tags              = local.tags
+
+  depends_on = [module.eks_node_group_default]
+}
+
+# ##############################
 # Argo CD
 # ##############################
 module "argocd" {
   source = "../../modules/aws/argocd"
+
+  argocd_version = "9.7.0"
 
   depends_on = [module.eks_node_group_default]
 }

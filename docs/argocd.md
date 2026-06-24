@@ -74,7 +74,9 @@ kubectl get pods -n argocd -w
 kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
 
 # port-forward the UI
-kubectl -n argocd port-forward svc/argocd-server 8080:80
+kubectl -n argocd port-forward svc/argocd-server 8081:443
+
+argocd login localhost:8081 --username admin --insecure
 ```
 
 ---
@@ -87,18 +89,23 @@ kubectl apply -f https://raw.githubusercontent.com/simonangel-fong/k8s-multi-clo
 # kubectl apply -f argocd/00-root.yaml
 # application.argoproj.io/root created
 
-argocd login localhost:8080 --username admin --insecure
-
 argocd app sync root
 # GROUP        KIND         NAMESPACE  NAME                  STATUS  HEALTH  HOOK  MESSAGE
 # argoproj.io  Application  argocd     envoy-gateway-config  Synced                application.argoproj.io/envoy-gateway-config created
 # argoproj.io  Application  argocd     envoy-gateway         Synced                application.argoproj.io/envoy-gateway unchanged
 
 argocd app list
-# NAME                  CLUSTER                         NAMESPACE             PROJECT  STATUS  HEALTH   SYNCPOLICY  CONDITIONS  REPO                                                    PATH        TARGET
-# argocd/envoy-gateway  https://kubernetes.default.svc  envoy-gateway-system  default  Synced  Healthy  Auto-Prune  <none>      registry-1.docker.io/envoyproxy                                     v1.2.0
-# argocd/root           https://kubernetes.default.svc  argocd                default  Synced  Healthy  Auto-Prune  <none>      https://github.com/simonangel-fong/k8s-multi-cloud.git  argocd/app  master
+# NAME                           CLUSTER                         NAMESPACE             PROJECT  STATUS  HEALTH       SYNCPOLICY  CONDITIONS  REPO                                                    PATH                         TARGET
+# argocd/clusters                https://kubernetes.default.svc  argocd                default  Synced  Healthy      Auto-Prune  <none>      https://github.com/simonangel-fong/k8s-multi-cloud.git  argocd/clusters              master
+# argocd/demo-api-eks-incluster  https://kubernetes.default.svc  demo-api              default  Synced  Healthy      Auto-Prune  <none>      https://github.com/simonangel-fong/k8s-multi-cloud.git  helm/multicloud-demo-api     master
+# argocd/envoy-gateway           https://kubernetes.default.svc  envoy-gateway-system  default  Synced  Healthy      Auto-Prune  <none>      registry-1.docker.io/envoyproxy                                                      v1.2.0
+# argocd/envoy-gateway-config    https://kubernetes.default.svc  envoy-gateway-system  default  Synced  Progressing  Auto-Prune  <none>      https://github.com/simonangel-fong/k8s-multi-cloud.git  argocd/envoy-gateway-config  master
+# argocd/root                    https://kubernetes.default.svc  argocd                default  Synced  Healthy      Auto-Prune  <none>      https://github.com/simonangel-fong/k8s-multi-cloud.git  argocd/app                   master
+```
 
+### Gateway
+
+```sh
 # confirm controller running
 kubectl get pods -n envoy-gateway-system
 # NAME                                                      READY   STATUS    RESTARTS   AGE
@@ -124,12 +131,9 @@ kubectl get pods,svc -n demo-api
 kubectl get httproute -n demo-api
 # NAME                           HOSTNAMES                    AGE
 # demo-api-multicloud-demo-api   ["cloud.arguswatcher.net"]   2m51s
-
-# resolve gateway address
-GATEWAY_ADDR=$(kubectl get gateway eg -n envoy-gateway-system -o jsonpath='{.status.addresses[0].value}')
-curl -H "Host: cloud.arguswatcher.net" "http://${GATEWAY_ADDR}/api/"
-# {"app":"k8s-multi-cloud","cloud_provider":"local","version":"0.1.0"}
 ```
+
+---
 
 ---
 
@@ -144,12 +148,25 @@ curl -H "Host: cloud.arguswatcher.net" "http://${GATEWAY_ADDR}/api/"
 ```sh
 argocd app sync clusters
 argocd appset list
+# NAME             PROJECT  SYNCPOLICY  CONDITIONS                                                                                                                                                                                                                                                             REPO                                                    PATH                      TARGET
+# argocd/demo-api  default  nil         [{ParametersGenerated Successfully generated parameters for all Applications 2026-06-24 17:14:52 -0400 EDT True ParametersGenerated} {ResourcesUpToDate All applications have been generated successfully 2026-06-24 18:00:28 -0400 EDT True ApplicationSetUpToDate}]  https://github.com/simonangel-fong/k8s-multi-cloud.git  helm/multicloud-demo-api  master
 
 argocd app list | grep demo-api
 
 GATEWAY_ADDR=$(kubectl get gateway eg -n envoy-gateway-system -o jsonpath='{.status.addresses[0].value}')
 curl -H "Host: cloud.arguswatcher.net" "http://${GATEWAY_ADDR}/api/"
 # {"app":"k8s-multi-cloud","cloud_provider":"aws","version":"0.1.0"}
+```
+
+## Test APP
+
+```sh
+# resolve gateway address
+GATEWAY_ADDR=$(kubectl get gateway eg -n envoy-gateway-system -o jsonpath='{.status.addresses[0].value}')
+echo $GATEWAY_ADDR
+# ac23d6ce9322842a49dc57a7eb22a84f-1136175866.ca-central-1.elb.amazonaws.com
+curl -H "Host: cloud.arguswatcher.net" "http://${GATEWAY_ADDR}/api/"
+# {"app":"k8s-multi-cloud","cloud_provider":"local","version":"0.1.0"}
 ```
 
 #### AKS
@@ -160,4 +177,12 @@ argocd cluster add <aks-kubectx> --name aks-prod
 # 3) label the new cluster Secret so the generator picks it up:
 kubectl -n argocd label secret aks-prod cloud=azure workload=demo-api
 # ApplicationSet auto-creates demo-api-aks-prod; cloud_provider returns "azure".
+```
+
+---
+
+## Runbook
+
+```sh
+kubectl patch gatewayclass eg --type=json -p='[{"op":"remove","path":"/metadata/finalizers"}]'
 ```
