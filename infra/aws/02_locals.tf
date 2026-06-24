@@ -1,14 +1,9 @@
 locals {
 
   # ##############################
-  # Project
+  # Metadata
   # ##############################
-  project_name = "gitops"
-
-  # ##############################
-  # Cloudflare DNS
-  # ##############################
-  domain = "arguswatcher.net"
+  common_name = "${var.project_name}-${var.env}"
 
   # ##############################
   # AWS
@@ -19,12 +14,9 @@ locals {
     ManagedBy   = "terraform"
   }
 
-  name = "${local.project_name}-${var.env}"
-
-  # ##############################
   # VPC
-  # ##############################
-  vpc_name = "${local.project_name}-${var.env}"
   vpc_cidr = "10.0.0.0/16"
 
+  # EKS
+  cluster_version = "1.36"
 }
