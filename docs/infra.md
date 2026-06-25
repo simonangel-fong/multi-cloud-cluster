@@ -52,7 +52,7 @@ kubectl get nodes
 
 ---
 
-## ArgoCD
+## ArgoCD: Multi-cloud
 
 ```sh
 argocd login localhost:8081 --username admin   --insecure
