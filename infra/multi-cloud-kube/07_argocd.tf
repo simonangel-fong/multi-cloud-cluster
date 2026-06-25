@@ -90,11 +90,13 @@ resource "kubernetes_secret" "eks_cluster" {
 # ##############################
 # ArgoCD: App-of-apps
 # ##############################
-data "kubectl_path_documents" "root" {
-  pattern = "${path.module}/../../argocd/00-root.yaml"
+data "http" "argocd_root_app" {
+  url = "https://raw.githubusercontent.com/simonangel-fong/k8s-multi-cloud/refs/heads/master/argocd/00-root.yaml"
 }
 
-resource "kubectl_manifest" "root" {
-  for_each  = toset(data.kubectl_path_documents.root.documents)
-  yaml_body = each.value
+resource "kubernetes_manifest" "root" {
+  provider = kubernetes.eks
+  manifest = yamldecode(data.http.argocd_root_app.response_body)
+
+  depends_on = [module.argocd]
 }

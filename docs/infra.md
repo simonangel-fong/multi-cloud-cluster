@@ -1,7 +1,6 @@
 ## Provision Infra
 
 ```sh
-terraform -chdir=infra/multi-cloud-kube providers
 terraform -chdir=infra/multi-cloud-kube init -backend-config=backend.hcl -reconfigure
 terraform -chdir=infra/multi-cloud-kube fmt && terraform -chdir=infra/multi-cloud-kube validate
 terraform -chdir=infra/multi-cloud-kube plan
