@@ -87,6 +87,18 @@ resource "kubernetes_secret" "eks_cluster" {
   }
 }
 
+
+# ##############################
+# Argo CD: Install
+# ##############################
+module "argocd" {
+  source = "../../modules/aws/argocd"
+
+  argocd_version = "9.7.0"
+
+  depends_on = [module.eks_node_group_default]
+}
+
 # ##############################
 # ArgoCD: App-of-apps
 # ##############################

@@ -42,27 +42,3 @@ module "eks_node_group_default" {
 
   tags = local.tags
 }
-
-# ##############################
-# Argo CD
-# ##############################
-module "argocd" {
-  source = "../../modules/aws/argocd"
-
-  argocd_version = "9.7.0"
-
-  depends_on = [module.eks_node_group_default]
-}
-
-# # ##############################
-# # Argo CD: app-of-apps
-# # ##############################
-# data "http" "argocd_root_app" {
-#   url = "https://raw.githubusercontent.com/simonangel-fong/k8s-multi-cloud/refs/heads/master/argocd/00-root.yaml"
-# }
-
-# resource "kubernetes_manifest" "argocd_root_app" {
-#   manifest = yamldecode(data.http.argocd_root_app.response_body)
-
-#   depends_on = [module.argocd]
-# }

@@ -6,7 +6,9 @@ terraform -chdir=infra/multi-cloud-kube fmt && terraform -chdir=infra/multi-clou
 terraform -chdir=infra/multi-cloud-kube plan
 terraform -chdir=infra/multi-cloud-kube apply -auto-approve
 
-terraform -chdir=infra/aws destroy -auto-approve
+terraform -chdir=infra/multi-cloud-kube destroy -auto-approve
+
+terraform -chdir=infra/multi-cloud-kube output kubeconfig_eks
 ```
 
 ---
