@@ -32,7 +32,7 @@ spec:
             cluster:
               name: '{{ .name }}'
             destinations:
-              - name: grafana-cloud-metrics
+              grafana-cloud-metrics:
                 type: prometheus
                 urlFrom: sys.env("PROM_URL")
                 auth:
@@ -43,7 +43,7 @@ spec:
                   create: false
                   name: grafana-cloud
                   namespace: monitoring
-              - name: grafana-cloud-logs
+              grafana-cloud-logs:
                 type: loki
                 urlFrom: sys.env("LOGS_URL")
                 auth:
