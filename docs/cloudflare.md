@@ -121,34 +121,41 @@ terraform -chdir=infra/cf-lb destroy -auto-approve
 ```sh
 dig +short cloud.arguswatcher.net
 # <Cloudflare anycast IPs>
-
-# Repeat — random steering should return both clouds over time
-for i in $(seq 1 10); do
-  curl -s https://cloud.arguswatcher.net/api/ | jq -r .cloud_provider
-done
-# aws
-# azure
-# aws
-# azure
-# ...
 ```
+
+Run the demo script — hits the LB once per second and prints a live tally of which cloud answered:
+
+```sh
+./scripts/demo-traffic.sh
+# 14:32:01  aws    (aws=1 azure=0 error=0)
+# 14:32:02  azure  (aws=1 azure=1 error=0)
+# 14:32:03  azure  (aws=1 azure=2 error=0)
+# ...
+# Final tally:
+#   aws    61
+#   azure  59
+```
+
+Env overrides: `DURATION` (seconds, default 120), `SLEEP` (seconds between requests, default 1), `URL` (target, default `https://cloud.arguswatcher.net/api/`).
 
 ### Failover drill
 
+In one terminal, start the demo loop:
+
 ```sh
-# Take AWS out of rotation
-kubectl --context multi-cloud-k8s-dev -n envoy-gateway-system scale deploy envoy-envoy-gateway-system-eg-<hash> --replicas=0
+DURATION=180 ./scripts/demo-traffic.sh
+```
 
-# Within monitor interval, all requests should return azure
-for i in $(seq 1 10); do
-  curl -s https://cloud.arguswatcher.net/api/ | jq -r .cloud_provider
-done
-# azure
-# azure
-# ...
+In a second terminal, scale the AWS envoy proxy to 0. Within one monitor interval (~60s), the first terminal stops returning `aws`:
 
-# Restore
-kubectl --context multi-cloud-k8s-dev -n envoy-gateway-system scale deploy envoy-envoy-gateway-system-eg-<hash> --replicas=1
+```sh
+aws eks update-kubeconfig --region ca-central-1 --name multi-cloud-k8s-dev
+kubectl -n envoy-gateway-system scale deploy envoy-envoy-gateway-system-eg-<hash> --replicas=0
+
+# wait ~60s, watch the demo terminal flip to 100% azure
+
+# restore
+kubectl -n envoy-gateway-system scale deploy envoy-envoy-gateway-system-eg-<hash> --replicas=1
 ```
 
 ---

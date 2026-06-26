@@ -61,3 +61,22 @@ resource "cloudflare_load_balancer_pool" "azure" {
     weight  = 1
   }]
 }
+
+# ##############################
+# Load balancer
+# ##############################
+resource "cloudflare_load_balancer" "cloud" {
+  zone_id          = data.cloudflare_zone.zone.zone_id
+  name             = local.fqdn
+  description      = "${local.common_name} multi-cloud LB"
+  enabled          = true
+  proxied          = true
+  steering_policy  = "random"
+  session_affinity = "none"
+
+  default_pools = [
+    cloudflare_load_balancer_pool.aws.id,
+    cloudflare_load_balancer_pool.azure.id,
+  ]
+  fallback_pool = cloudflare_load_balancer_pool.aws.id
+}

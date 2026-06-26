@@ -22,3 +22,13 @@ output "cf_pool_azure_id" {
   description = "Cloudflare LB pool id (Azure/AKS)"
   value       = cloudflare_load_balancer_pool.azure.id
 }
+
+output "cf_lb_id" {
+  description = "Cloudflare load balancer id"
+  value       = cloudflare_load_balancer.cloud.id
+}
+
+output "cf_hostname" {
+  description = "Public hostname fronting both clouds"
+  value       = local.fqdn
+}

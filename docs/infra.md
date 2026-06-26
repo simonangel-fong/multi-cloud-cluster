@@ -26,6 +26,7 @@ terraform -chdir=infra/multi-cloud-kube output kubeconfig_eks
 | ------- | ------------- | ------------- | ---------- |
 | public  | ca-central-1a | 10.0.0.0/24   | 251        |
 | public  | ca-central-1b | 10.0.1.0/24   | 251        |
+| public  | ca-central-1d | 10.0.2.0/24   | 251        |
 | private | ca-central-1a | 10.0.64.0/18  | 16,379     |
 | private | ca-central-1b | 10.0.128.0/18 | 16,379     |
 | private | ca-central-1d | 10.0.192.0/18 | 16,379     |
