@@ -25,7 +25,7 @@ spec:
       revisionHistoryLimit: 3
       # source: manifests
       source:
-        repoURL: https://github.com/simonangel-fong/multi-cloud-k8s.git
+        repoURL: https://github.com/simonangel-fong/project-multi-cloud-k8s.git
         targetRevision: master
         path: argocd/envoy-gateway-config
       # destination: selected cluster server

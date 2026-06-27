@@ -118,10 +118,10 @@ argocd app sync root
 
 argocd app list
 # NAME                           CLUSTER                         NAMESPACE             PROJECT  STATUS  HEALTH       SYNCPOLICY  CONDITIONS  REPO                                                    PATH                         TARGET
-# argocd/demo-api-eks-incluster  https://kubernetes.default.svc  demo-api              default  Synced  Healthy      Auto-Prune  <none>      https://github.com/simonangel-fong/multi-cloud-k8s.git  helm/multicloud-demo-api     master
+# argocd/demo-api-eks-incluster  https://kubernetes.default.svc  demo-api              default  Synced  Healthy      Auto-Prune  <none>      https://github.com/simonangel-fong/project-multi-cloud-k8s.git  helm/multicloud-demo-api     master
 # argocd/envoy-gateway           https://kubernetes.default.svc  envoy-gateway-system  default  Synced  Healthy      Auto-Prune  <none>      registry-1.docker.io/envoyproxy                                                      v1.8.1
-# argocd/envoy-gateway-config    https://kubernetes.default.svc  envoy-gateway-system  default  Synced  Progressing  Auto-Prune  <none>      https://github.com/simonangel-fong/multi-cloud-k8s.git  argocd/envoy-gateway-config  master
-# argocd/root                    https://kubernetes.default.svc  argocd                default  Synced  Healthy      Auto-Prune  <none>      https://github.com/simonangel-fong/multi-cloud-k8s.git  argocd/app                   master
+# argocd/envoy-gateway-config    https://kubernetes.default.svc  envoy-gateway-system  default  Synced  Progressing  Auto-Prune  <none>      https://github.com/simonangel-fong/project-multi-cloud-k8s.git  argocd/envoy-gateway-config  master
+# argocd/root                    https://kubernetes.default.svc  argocd                default  Synced  Healthy      Auto-Prune  <none>      https://github.com/simonangel-fong/project-multi-cloud-k8s.git  argocd/app                   master
 ```
 
 ### Gateway
@@ -168,7 +168,7 @@ kubectl get httproute -n demo-api
 argocd app sync clusters
 argocd appset list
 # NAME             PROJECT  SYNCPOLICY  CONDITIONS                                                                                                                                                                                                                                                             REPO                                                    PATH                      TARGET
-# argocd/demo-api  default  nil         [{ParametersGenerated Successfully generated parameters for all Applications 2026-06-24 17:14:52 -0400 EDT True ParametersGenerated} {ResourcesUpToDate All applications have been generated successfully 2026-06-24 18:00:28 -0400 EDT True ApplicationSetUpToDate}]  https://github.com/simonangel-fong/multi-cloud-k8s.git  helm/multicloud-demo-api  master
+# argocd/demo-api  default  nil         [{ParametersGenerated Successfully generated parameters for all Applications 2026-06-24 17:14:52 -0400 EDT True ParametersGenerated} {ResourcesUpToDate All applications have been generated successfully 2026-06-24 18:00:28 -0400 EDT True ApplicationSetUpToDate}]  https://github.com/simonangel-fong/project-multi-cloud-k8s.git  helm/multicloud-demo-api  master
 
 argocd app list | grep demo-api
 

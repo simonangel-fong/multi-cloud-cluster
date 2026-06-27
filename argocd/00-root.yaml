@@ -9,7 +9,7 @@ spec:
   project: default
   revisionHistoryLimit: 3
   source:
-    repoURL: https://github.com/simonangel-fong/multi-cloud-k8s.git
+    repoURL: https://github.com/simonangel-fong/project-multi-cloud-k8s.git
     targetRevision: master
     path: argocd/app
     directory:
