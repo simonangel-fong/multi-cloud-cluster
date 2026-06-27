@@ -131,7 +131,7 @@ $env:VERSION="0.1.0"; $env:CLOUD_PROVIDER="AWS"; go run .
 
 docker compose -f app/docker-compose.yaml up --build -d
 curl -s localhost:8081/api/
-# {"app":"k8s-multi-cloud","cloud_provider":"aws","version":"0.1.0"}
+# {"app":"multi-cloud-k8s","cloud_provider":"aws","version":"0.1.0"}
 
 # confirm: metric
 curl -s localhost:8081/metrics | grep http_requests_total

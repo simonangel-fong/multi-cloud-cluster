@@ -24,7 +24,7 @@ A minimal RESTful API for validating multi-cloud Kubernetes deployments.
 
 | Method | Path       | Response                                                             |
 | ------ | ---------- | -------------------------------------------------------------------- |
-| GET    | `/api/`    | `{"app":"k8s-multi-cloud","version":"0.1.0","cloud_provider":"AWS"}` |
+| GET    | `/api/`    | `{"app":"multi-cloud-k8s","version":"0.1.0","cloud_provider":"AWS"}` |
 | GET    | `/healthz` | `ok`                                                                 |
 | GET    | `/env/`    | `{"VERSION":"0.1.0","CLOUD_PROVIDER":"AWS"}`                         |
 
@@ -82,7 +82,7 @@ curl http://localhost:8080/env/
 # {"CLOUD_PROVIDER":"AWS","VERSION":"0.1.0"}
 
 curl http://localhost:8080/api/
-# {"app":"k8s-multi-cloud","cloud_provider":"AWS","version":"0.1.0"}
+# {"app":"multi-cloud-k8s","cloud_provider":"AWS","version":"0.1.0"}
 
 curl http://localhost:8080/healthz
 # ok
@@ -97,10 +97,10 @@ cd app
 docker compose up -d --build
 
 curl http://localhost:8081/api/
-# {"app":"k8s-multi-cloud","cloud_provider":"aws","version":"0.1.0"}
+# {"app":"multi-cloud-k8s","cloud_provider":"aws","version":"0.1.0"}
 
 curl http://localhost:8082/api/
-# {"app":"k8s-multi-cloud","cloud_provider":"azure","version":"1.0.0"}
+# {"app":"multi-cloud-k8s","cloud_provider":"azure","version":"1.0.0"}
 
 curl http://localhost:8081/healthz
 # ok
@@ -133,7 +133,7 @@ docker push simonangelfong/multicloud-demo-api:latest
 docker run -d --name multicloud-demo-api --rm -p 8080:8080 -e VERSION=0.1.0 -e CLOUD_PROVIDER=aws simonangelfong/multicloud-demo-api:0.1.0
 # then in another terminal:
 curl http://localhost:8080/api/
-# {"app":"k8s-multi-cloud","cloud_provider":"aws","version":"0.1.0"}
+# {"app":"multi-cloud-k8s","cloud_provider":"aws","version":"0.1.0"}
 
 docker stop multicloud-demo-api
 docker rm multicloud-demo-api

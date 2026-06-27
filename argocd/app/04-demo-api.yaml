@@ -25,7 +25,7 @@ spec:
       revisionHistoryLimit: 3
       # source: helm templates
       source:
-        repoURL: https://github.com/simonangel-fong/k8s-multi-cloud.git
+        repoURL: https://github.com/simonangel-fong/multi-cloud-k8s.git
         targetRevision: master
         path: helm/multicloud-demo-api
         helm:

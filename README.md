@@ -1,8 +1,8 @@
 # Project: Kubernetes Multicloud with GitOps
 
 > One app. Two clouds. GitOps end to end.
->
-> A project that runs a single application across `AWS EKS` and `Azure AKS` with shared observability and traffic control.
+
+A project that runs a single application across `AWS EKS` and `Azure AKS` with shared observability and traffic control.
 
 ![Kubernetes](https://img.shields.io/badge/Kubernetes-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white&style=plastic) ![Helm](https://img.shields.io/badge/helm-%230F1689.svg?style=for-the-badge&logo=helm&logoColor=white&style=plastic) ![Argo CD](https://img.shields.io/badge/Argo%20CD-EF7B4D?style=for-the-badge&logo=argo&logoColor=white&style=plastic) <br>
 ![AWS](https://img.shields.io/badge/AWS-FF9900?style=for-the-badge&logo=amazonwebservices&logoColor=white&style=plastic) ![Microsoft Azure](https://custom-icon-badges.demolab.com/badge/Microsoft%20Azure-0089D6?logo=msazure&logoColor=white&style=plastic) ![Cloudflare](https://img.shields.io/badge/Cloudflare-F38020?style=for-the-badge&logo=Cloudflare&logoColor=white&style=plastic) ![Terraform](https://img.shields.io/badge/Terraform-7B42BC?style=for-the-badge&logo=terraform&logoColor=white&style=plastic)
@@ -21,7 +21,7 @@
 
 > **What is `Kubernetes multicloud`?**
 
-- The practice of deploying and managing `Kubernetes` clusters across multiple cloud providers — such as `AWS`, `Azure`, and `Google Cloud` — at the same time.
+- The practice of deploying and managing `Kubernetes` clusters across multiple cloud providers, such as `AWS`, `Azure`, and `Google Cloud`, at the same time.
 
 > **Why multi-cloud?**
 
@@ -51,9 +51,7 @@
 
 ## Architecture Diagram
 
-```txt
-(diagram placeholder)
-```
+![architecture](./docs/img/architecture.gif)
 
 **Key components**
 
@@ -92,8 +90,8 @@ A single `ArgoCD ApplicationSet` deploys the **demo API** to both `EKS` and `AKS
 2. Use the `clusters generator` in an `ApplicationSet` to **fan out** to every matching cluster.
 3. Use each cluster's `cloud` label to pick the matching `values-<cloud>.yaml` from the Helm chart.
 
-![ArgoCD UI — clusters](./docs/img/argocd-ui01.png)
-![ArgoCD UI — apps](./docs/img/argocd-ui02.png)
+![ArgoCD UI - clusters](./docs/img/argocd-ui01.png)
+![ArgoCD UI - apps](./docs/img/argocd-ui02.png)
 
 **ApplicationSet (excerpt)**
 
@@ -163,9 +161,9 @@ Both clusters ship **metrics and logs** to a single `Grafana Cloud` workspace, g
 - `Grafana Alloy` runs in each cluster and **forwards metrics and logs** to `Grafana Cloud`.
 - `Grafana Cloud` dashboards render data from both clusters side by side.
 
-![Grafana Cloud — combined view](./docs/img/grafana01.png)
-![Grafana Cloud — EKS dashboard](./docs/img/grafana02.png)
-![Grafana Cloud — AKS dashboard](./docs/img/grafana03.png)
+![Grafana Cloud - combined view](./docs/img/grafana01.png)
+![Grafana Cloud - EKS dashboard](./docs/img/grafana02.png)
+![Grafana Cloud - AKS dashboard](./docs/img/grafana03.png)
 
 ---
 

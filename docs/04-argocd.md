@@ -107,7 +107,7 @@ argocd login localhost:8081 --username admin --insecure
 
 ```sh
 # apply the root Application
-kubectl apply -f https://raw.githubusercontent.com/simonangel-fong/k8s-multi-cloud/refs/heads/master/argocd/00-root.yaml
+kubectl apply -f https://raw.githubusercontent.com/simonangel-fong/multi-cloud-k8s/refs/heads/master/argocd/00-root.yaml
 # kubectl apply -f argocd/00-root.yaml
 # application.argoproj.io/root created
 
@@ -118,10 +118,10 @@ argocd app sync root
 
 argocd app list
 # NAME                           CLUSTER                         NAMESPACE             PROJECT  STATUS  HEALTH       SYNCPOLICY  CONDITIONS  REPO                                                    PATH                         TARGET
-# argocd/demo-api-eks-incluster  https://kubernetes.default.svc  demo-api              default  Synced  Healthy      Auto-Prune  <none>      https://github.com/simonangel-fong/k8s-multi-cloud.git  helm/multicloud-demo-api     master
+# argocd/demo-api-eks-incluster  https://kubernetes.default.svc  demo-api              default  Synced  Healthy      Auto-Prune  <none>      https://github.com/simonangel-fong/multi-cloud-k8s.git  helm/multicloud-demo-api     master
 # argocd/envoy-gateway           https://kubernetes.default.svc  envoy-gateway-system  default  Synced  Healthy      Auto-Prune  <none>      registry-1.docker.io/envoyproxy                                                      v1.8.1
-# argocd/envoy-gateway-config    https://kubernetes.default.svc  envoy-gateway-system  default  Synced  Progressing  Auto-Prune  <none>      https://github.com/simonangel-fong/k8s-multi-cloud.git  argocd/envoy-gateway-config  master
-# argocd/root                    https://kubernetes.default.svc  argocd                default  Synced  Healthy      Auto-Prune  <none>      https://github.com/simonangel-fong/k8s-multi-cloud.git  argocd/app                   master
+# argocd/envoy-gateway-config    https://kubernetes.default.svc  envoy-gateway-system  default  Synced  Progressing  Auto-Prune  <none>      https://github.com/simonangel-fong/multi-cloud-k8s.git  argocd/envoy-gateway-config  master
+# argocd/root                    https://kubernetes.default.svc  argocd                default  Synced  Healthy      Auto-Prune  <none>      https://github.com/simonangel-fong/multi-cloud-k8s.git  argocd/app                   master
 ```
 
 ### Gateway
@@ -168,13 +168,13 @@ kubectl get httproute -n demo-api
 argocd app sync clusters
 argocd appset list
 # NAME             PROJECT  SYNCPOLICY  CONDITIONS                                                                                                                                                                                                                                                             REPO                                                    PATH                      TARGET
-# argocd/demo-api  default  nil         [{ParametersGenerated Successfully generated parameters for all Applications 2026-06-24 17:14:52 -0400 EDT True ParametersGenerated} {ResourcesUpToDate All applications have been generated successfully 2026-06-24 18:00:28 -0400 EDT True ApplicationSetUpToDate}]  https://github.com/simonangel-fong/k8s-multi-cloud.git  helm/multicloud-demo-api  master
+# argocd/demo-api  default  nil         [{ParametersGenerated Successfully generated parameters for all Applications 2026-06-24 17:14:52 -0400 EDT True ParametersGenerated} {ResourcesUpToDate All applications have been generated successfully 2026-06-24 18:00:28 -0400 EDT True ApplicationSetUpToDate}]  https://github.com/simonangel-fong/multi-cloud-k8s.git  helm/multicloud-demo-api  master
 
 argocd app list | grep demo-api
 
 GATEWAY_ADDR=$(kubectl get gateway eg -n envoy-gateway-system -o jsonpath='{.status.addresses[0].value}')
 curl -H "Host: cloud.arguswatcher.net" "http://${GATEWAY_ADDR}/api/"
-# {"app":"k8s-multi-cloud","cloud_provider":"aws","version":"0.1.0"}
+# {"app":"multi-cloud-k8s","cloud_provider":"aws","version":"0.1.0"}
 ```
 
 #### Test APP
@@ -185,7 +185,7 @@ GATEWAY_ADDR=$(kubectl get gateway eg -n envoy-gateway-system -o jsonpath='{.sta
 echo $GATEWAY_ADDR
 # ac23d6ce9322842a49dc57a7eb22a84f-1136175866.ca-central-1.elb.amazonaws.com
 curl -H "Host: cloud.arguswatcher.net" "http://${GATEWAY_ADDR}/api/"
-# {"app":"k8s-multi-cloud","cloud_provider":"local","version":"0.1.0"}
+# {"app":"multi-cloud-k8s","cloud_provider":"local","version":"0.1.0"}
 ```
 
 ### AKS
@@ -215,7 +215,7 @@ GATEWAY_ADDR=$(kubectl get gateway eg -n envoy-gateway-system -o jsonpath='{.sta
 echo $GATEWAY_ADDR
 '20.48.140.60'
 curl -H "Host: cloud.arguswatcher.net" "http://20.48.140.60/api/"
-# {"app":"k8s-multi-cloud","cloud_provider":"azure","version":"0.1.0"}
+# {"app":"multi-cloud-k8s","cloud_provider":"azure","version":"0.1.0"}
 ```
 
 ---

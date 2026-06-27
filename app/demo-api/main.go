@@ -50,7 +50,7 @@ func main() {
 	// GET /api/
 	r.GET("/api/", func(c *gin.Context) {
 		c.JSON(200, gin.H{
-			"app":            "k8s-multi-cloud",
+			"app":            "multi-cloud-k8s",
 			"version":        os.Getenv("VERSION"),
 			"cloud_provider": os.Getenv("CLOUD_PROVIDER"),
 		})

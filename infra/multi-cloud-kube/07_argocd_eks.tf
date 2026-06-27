@@ -38,7 +38,7 @@ module "argocd" {
 # # ArgoCD: App-of-apps
 # # ##############################
 # data "http" "argocd_root_app" {
-#   url = "https://raw.githubusercontent.com/simonangel-fong/k8s-multi-cloud/refs/heads/master/argocd/00-root.yaml"
+#   url = "https://raw.githubusercontent.com/simonangel-fong/multi-cloud-k8s/refs/heads/master/argocd/00-root.yaml"
 # }
 
 # resource "kubernetes_manifest" "root" {

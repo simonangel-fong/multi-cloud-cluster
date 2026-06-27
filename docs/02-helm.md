@@ -95,7 +95,7 @@ kubectl port-forward svc/demo-multicloud-demo-api 8080:80
 
 
 curl http://localhost:8080/api/
-# {"app":"k8s-multi-cloud","cloud_provider":"local","version":"0.1.0"}
+# {"app":"multi-cloud-k8s","cloud_provider":"local","version":"0.1.0"}
 
 curl http://localhost:8080/env/
 # {"CLOUD_PROVIDER":"local","VERSION":"0.1.0"}
