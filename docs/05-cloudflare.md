@@ -60,7 +60,7 @@ Edge-terminated by Cloudflare (proxied = `true`). Origins stay HTTP on port 80 â
 - Single public hostname for both clouds
 - Active/active with health-based failover
 - TLS terminated at Cloudflare edge
-- All resources declarative in `infra/cloudflare`, state in the same S3 bucket as `multi-cloud-kube`
+- All resources declarative in `infra/cloudflare`, state in the same S3 bucket as `multi-cloud-k8s`
 
 ---
 

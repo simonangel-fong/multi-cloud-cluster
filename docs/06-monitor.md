@@ -39,7 +39,7 @@ container stdout/stderr  ──┘                                              
 - Repo layout
 
 ```
-infra/multi-cloud-kube/
+infra/multi-cloud-k8s/
   01_variables.tf       # gc_* vars (urls, usernames, token — token is sensitive)
   08_monitoring.tf      # monitoring ns + grafana-cloud Secret per cluster
 argocd/app/
@@ -98,7 +98,7 @@ Connections → **Kubernetes** → "Install integration" → copy the generated 
 
 ### Terraform Secret (phase 01)
 
-Add to `infra/multi-cloud-kube/terraform.tfvars` (gitignored):
+Add to `infra/multi-cloud-k8s/terraform.tfvars` (gitignored):
 
 ```hcl
 gc_prom_url       = ""
@@ -113,7 +113,7 @@ gc_token          = "glc_xxx"   # sensitive
 Apply:
 
 ```sh
-terraform -chdir=infra/multi-cloud-kube apply
+terraform -chdir=infra/multi-cloud-k8s apply
 kubectl -n monitoring get secret grafana-cloud -o jsonpath='{.data}' | jq 'keys'
 
 ```

@@ -15,7 +15,7 @@ spec:
             workload: demo-api
   template:
     metadata:
-      name: '{{ .name }}-04-grafana-k8s-monitoring'
+      name: '{{ .name }}-03-grafana-k8s-monitoring'
       annotations:
         argocd.argoproj.io/sync-wave: "2"
       finalizers:

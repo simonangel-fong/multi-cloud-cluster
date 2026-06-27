@@ -1,6 +1,17 @@
 # argocd.tf: eks
 
 # ##############################
+# Argo CD: Install
+# ##############################
+module "argocd" {
+  source = "../../modules/aws/argocd"
+
+  argocd_version = "9.7.0"
+
+  depends_on = [module.eks]
+}
+
+# ##############################
 # ArgoCD: Cluster Secret
 # ##############################
 # EKS cluster
@@ -21,17 +32,8 @@ resource "kubernetes_secret" "eks_cluster" {
     server = "https://kubernetes.default.svc"
     config = jsonencode({ tlsClientConfig = { insecure = false } })
   }
-}
 
-# ##############################
-# Argo CD: Install
-# ##############################
-module "argocd" {
-  source = "../../modules/aws/argocd"
-
-  argocd_version = "9.7.0"
-
-  depends_on = [module.eks_node_group_default]
+  depends_on = [module.argocd]
 }
 
 # # ##############################

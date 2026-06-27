@@ -64,13 +64,13 @@ A project that runs a single application across `AWS EKS` and `Azure AKS` with s
 **Repo structure**
 
 ```txt
-multi-cloud-clusters/
+multi-cloud-k8s/
     app/:                   a simple Go RESTful API application
     argocd/:                ArgoCD app-of-apps and application manifests
     helm/:                  Helm charts that package the application
     infra/:
         cloudflare/:        Cloudflare load balancing
-        multi-cloud-kube/:  AKS and EKS clusters
+        multi-cloud-k8s/:  AKS and EKS clusters
     modules/:               shared Terraform modules
         aws/:               AWS modules
         az/:                Azure modules
@@ -88,10 +88,7 @@ A single `ArgoCD ApplicationSet` deploys the **demo API** to both `EKS` and `AKS
 
 1. Register `EKS` and `AKS` as `ArgoCD clusters`, labelling each with `cloud: aws | azure` and `workload: demo-api`.
 2. Use the `clusters generator` in an `ApplicationSet` to **fan out** to every matching cluster.
-3. Use each cluster's `cloud` label to pick the matching `values-<cloud>.yaml` from the Helm chart.
-
-![ArgoCD UI - clusters](./docs/img/argocd-ui01.png)
-![ArgoCD UI - apps](./docs/img/argocd-ui02.png)
+3. Use each cluster's `cloud` label to pick the matching `values-<cloud>.yaml` from the `Helm chart`.
 
 **ApplicationSet (excerpt)**
 
@@ -116,6 +113,16 @@ spec:
         server: "{{ .server }}" # Specify destination server based on cluster(AKS/EKS)
 ```
 
+**ArgoCD UI**
+
+- Cluster: `AKS` and `EKS`
+
+![ArgoCD UI - clusters](./docs/img/argocd_ui01.png)
+
+- Applications
+
+![ArgoCD UI - apps](./docs/img/argocd_ui02.png)
+
 ---
 
 ## Feature: traffic control with Cloudflare
@@ -125,9 +132,6 @@ spec:
   - cost control,
   - failover drills,
   - and gradual cutovers.
-
-![Test script](./docs/img/test01.png)
-![Traffic distribution dashboard](./docs/img/test02.png)
 
 **Load balancer (excerpt)**
 
@@ -150,6 +154,9 @@ resource "cloudflare_load_balancer" "cloud" {           # Cloudflare load balanc
   }
 }
 ```
+
+![Test script](./docs/img/test01.png)
+![Traffic distribution dashboard](./docs/img/test02.png)
 
 ---
 

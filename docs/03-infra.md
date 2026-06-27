@@ -46,14 +46,14 @@
 ### Terraform
 
 ```sh
-terraform -chdir=infra/multi-cloud-kube init -backend-config=backend.hcl -reconfigure
-terraform -chdir=infra/multi-cloud-kube fmt && terraform -chdir=infra/multi-cloud-kube validate
-terraform -chdir=infra/multi-cloud-kube plan
-terraform -chdir=infra/multi-cloud-kube apply -auto-approve
+terraform -chdir=infra/multi-cloud-k8s init -backend-config=backend.hcl -reconfigure
+terraform -chdir=infra/multi-cloud-k8s fmt && terraform -chdir=infra/multi-cloud-k8s validate
+terraform -chdir=infra/multi-cloud-k8s plan
+terraform -chdir=infra/multi-cloud-k8s apply -auto-approve
 
-terraform -chdir=infra/multi-cloud-kube destroy -auto-approve
+terraform -chdir=infra/multi-cloud-k8s destroy -auto-approve
 
-terraform -chdir=infra/multi-cloud-kube output kubeconfig_eks
+terraform -chdir=infra/multi-cloud-k8s output kubeconfig_eks
 ```
 
 ---

@@ -15,7 +15,7 @@ spec:
             workload: demo-api
   template:
     metadata:
-      name: '{{ .name }}-03-demo-api'
+      name: '{{ .name }}-04-demo-api'
       annotations:
         argocd.argoproj.io/sync-wave: "3"
       finalizers:

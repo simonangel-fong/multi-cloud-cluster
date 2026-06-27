@@ -10,6 +10,8 @@ resource "kubernetes_service_account" "argocd_manager" {
     name      = "argocd-manager"
     namespace = "kube-system"
   }
+
+  depends_on = [module.argocd]
 }
 
 # Secret
@@ -25,6 +27,8 @@ resource "kubernetes_secret" "argocd_manager_token" {
 
   type                           = "kubernetes.io/service-account-token"
   wait_for_service_account_token = true
+
+  depends_on = [module.argocd]
 }
 
 # Role binding
@@ -64,4 +68,6 @@ resource "kubernetes_secret" "aks_cluster" {
       tlsClientConfig = { caData = module.aks.cluster_ca_certificate }
     })
   }
+
+  depends_on = [module.argocd]
 }
