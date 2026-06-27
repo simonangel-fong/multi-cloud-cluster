@@ -12,7 +12,7 @@ A project that runs a single application across `AWS EKS` and `Azure AKS` with s
   - [Architecture Diagram](#architecture-diagram)
   - [Feature: one application across multiple clouds](#feature-one-application-across-multiple-clouds)
   - [Feature: traffic control with Cloudflare](#feature-traffic-control-with-cloudflare)
-  - [Feature: central monitoring on Grafana Cloud](#feature-central-monitoring-on-grafana-cloud)
+  - [Feature: cloud-agnostic monitoring on Grafana Cloud](#feature-cloud-agnostic-monitoring-on-grafana-cloud)
   - [Documentation](#documentation)
 
 ---
@@ -33,7 +33,7 @@ A project that runs a single application across `AWS EKS` and `Azure AKS` with s
 **Trade-offs**
 
 - **Operational overhead**: multiple control planes, multiple IAM models, multiple networking stacks.
-- **Cost of consistency**: keeping clusters, manifests, and observability in sync requires extra tooling (ArgoCD, Helm, Alloy) and discipline.
+- **Cost of consistency**: keeping clusters, manifests, and observability in sync requires extra tooling (`ArgoCD`, `Helm`, `Alloy`) and discipline.
 
 ---
 
@@ -86,7 +86,7 @@ A single `ArgoCD ApplicationSet` deploys the **demo API** to both `EKS` and `AKS
 
 **Key steps**
 
-1. Register `EKS` and `AKS` as `ArgoCD clusters`, labelling each with `cloud: aws | azure` and `workload: demo-api`.
+1. Register `EKS` and `AKS` as `ArgoCD clusters`, labeling each with `cloud: aws | azure` and `workload: demo-api`.
 2. Use the `clusters generator` in an `ApplicationSet` to **fan out** to every matching cluster.
 3. Use each cluster's `cloud` label to pick the matching `values-<cloud>.yaml` from the `Helm chart`.
 
@@ -119,16 +119,30 @@ spec:
 
 ![ArgoCD UI - clusters](./docs/img/argocd_ui01.png)
 
-- Applications
+- Application list: prefixed with cluster name
 
-![ArgoCD UI - apps](./docs/img/argocd_ui02.png)
+![ArgoCD UI - apps list](./docs/img/argocd_ui02.png)
+
+- Application: `Healthy` and `Synced`
+
+![ArgoCD UI - app](./docs/img/argocd_ui03.png)
+
+**Infrastructure**
+
+- AWS EKS
+
+![pic](./docs/img/aws_eks_ui01.png)
+
+- Azure AKS
+
+![pic](./docs/img/azure_aks_ui01.png)
 
 ---
 
 ## Feature: traffic control with Cloudflare
 
 - A `Cloudflare Load Balancer` sits in front of both clusters and steers traffic between the `AWS` and `Azure` pools.
-- Adjusting the **pool weights shifts load** between clouds without touching DNS or the clusters themselves, useful for:
+- Adjusting the **pool weights shifts load** between clouds without touching DNS or the clusters themselves, which is useful for:
   - cost control,
   - failover drills,
   - and gradual cutovers.
@@ -146,31 +160,53 @@ resource "cloudflare_load_balancer" "cloud" {           # Cloudflare load balanc
   ]
 
   random_steering = {
-    default_weight = 1
+    default_weight = 1    #  fallback weight for the pool not in pool_weights
     pool_weights = {
-      (cloudflare_load_balancer_pool.aws.id)   = 0.5    # 50/50 split: adjust to control traffic
-      (cloudflare_load_balancer_pool.azure.id) = 0.5
+      (cloudflare_load_balancer_pool.aws.id)   = 0.8    # 8/2 split: adjust to control traffic
+      (cloudflare_load_balancer_pool.azure.id) = 0.2
     }
   }
 }
 ```
 
+---
+
+**Cloudflare Load Balancing**
+
+- `Cloudflare` UI
+
+![cloudfalre ui](./docs/img/cloudflare_lb_ui01.png)
+
+- Test:
+  - 21:78 matches the load balancing configuration (2:8)
+
 ![Test script](./docs/img/test01.png)
-![Traffic distribution dashboard](./docs/img/test02.png)
+
+![Test script](./docs/img/test02.png)
 
 ---
 
-## Feature: central monitoring on Grafana Cloud
+## Feature: cloud-agnostic monitoring on Grafana Cloud
 
-Both clusters ship **metrics and logs** to a single `Grafana Cloud` workspace, giving one pane of glass across `AWS` and `Azure`.
+Both clusters ship **metrics and logs** to a single `Grafana Cloud` workspace, making **monitoring cloud-agnostic**.
 
 - The demo API **exports** `Prometheus` metrics via a `Go module`.
 - `Grafana Alloy` runs in each cluster and **forwards metrics and logs** to `Grafana Cloud`.
 - `Grafana Cloud` dashboards render data from both clusters side by side.
 
-![Grafana Cloud - combined view](./docs/img/grafana01.png)
-![Grafana Cloud - EKS dashboard](./docs/img/grafana02.png)
-![Grafana Cloud - AKS dashboard](./docs/img/grafana03.png)
+**Grafana Dashboard**
+
+- Cluster Overview
+
+![Grafana Cloud - combined view](./docs/img/grafana_dashboard01.png)
+
+- Cluster list
+
+![Grafana Cloud - EKS dashboard](./docs/img/grafana_dashboard02.png)
+
+- Cluster: eks
+
+![Grafana Cloud - AKS dashboard](./docs/img/grafana_dashboard03.png)
 
 ---
 

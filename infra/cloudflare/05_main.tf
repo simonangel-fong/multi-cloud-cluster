@@ -81,10 +81,10 @@ resource "cloudflare_load_balancer" "cloud" {
   fallback_pool = cloudflare_load_balancer_pool.aws.id
 
   random_steering = {
-    default_weight = 1
+    default_weight = 1 #  fallback weight for the pool not in pool_weights
     pool_weights = {
-      (cloudflare_load_balancer_pool.aws.id)   = 0.5
-      (cloudflare_load_balancer_pool.azure.id) = 0.5
+      (cloudflare_load_balancer_pool.aws.id)   = 0.8 # 8/2 split: adjust to control traffic
+      (cloudflare_load_balancer_pool.azure.id) = 0.2
     }
   }
 }

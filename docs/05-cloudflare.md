@@ -144,6 +144,6 @@ Run the demo script — hits the LB once per second and prints a live tally of w
 Env overrides: `DURATION` (seconds, default 120), `SLEEP` (seconds between requests, default 1), `URL` (target, default `https://cloud.arguswatcher.net/api/`).
 
 ```sh
-curl -v -H "Host: cloud.arguswatcher.net" "http://20.200.88.217/api/"
-curl -v -H "Host: cloud.arguswatcher.net" "http://a4e79dabf1d6b41919543e2410b20307-31536122.ca-central-1.elb.amazonaws.com/api/"
+curl -v -H "Host: cloud.arguswatcher.net" "http://20.116.145.250/api/"
+curl -v -H "Host: cloud.arguswatcher.net" "http://a63ee11f5d25648c3905ef5f93aeb5e6-749435624.ca-central-1.elb.amazonaws.com/api/"
 ```
