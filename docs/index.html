@@ -6,235 +6,13 @@
   <title>Multi-cloud Cluster with GitOps</title>
 
   <!-- Bootstrap 5 -->
-  <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-    rel="stylesheet"
-  />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
   <!-- Bootstrap Icons -->
-  <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
-    rel="stylesheet"
-  />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
   <!-- Google Fonts -->
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap"
-    rel="stylesheet"
-  />
-
-  <style>
-    /* ── Tokens ── */
-    :root {
-      --bg-base:      #0d1117;
-      --bg-surface:   #161b22;
-      --bg-card:      #1c2128;
-      --border:       #30363d;
-      --accent:       #2f81f7;
-      --accent-dim:   #1a4a8a;
-      --text-primary: #e6edf3;
-      --text-muted:   #8b949e;
-      --green:        #3fb950;
-      --orange:       #d29922;
-      --purple:       #a371f7;
-    }
-
-    /* ── Base ── */
-    body {
-      font-family: "Inter", sans-serif;
-      background-color: var(--bg-base);
-      color: var(--text-primary);
-    }
-
-    code, pre, .mono {
-      font-family: "JetBrains Mono", monospace;
-    }
-
-    /* ── Navbar ── */
-    #mainNav {
-      background-color: rgba(13, 17, 23, 0.92);
-      backdrop-filter: blur(8px);
-      border-bottom: 1px solid var(--border);
-    }
-
-    #mainNav .navbar-brand {
-      font-weight: 700;
-      color: var(--accent) !important;
-      font-size: 1rem;
-      letter-spacing: 0.02em;
-    }
-
-    #mainNav .nav-link {
-      color: var(--text-muted) !important;
-      font-size: 0.875rem;
-      padding: 0.4rem 0.75rem;
-      transition: color 0.2s;
-    }
-
-    #mainNav .nav-link:hover,
-    #mainNav .nav-link.active {
-      color: var(--text-primary) !important;
-    }
-
-    /* ── Section shared ── */
-    section {
-      padding: 5rem 0;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .section-label {
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 0.5rem;
-    }
-
-    .section-title {
-      font-size: 2rem;
-      font-weight: 700;
-      color: var(--text-primary);
-      margin-bottom: 1rem;
-    }
-
-    .section-lead {
-      color: var(--text-muted);
-      max-width: 640px;
-    }
-
-    /* ── Hero ── */
-    #hero {
-      padding: 7rem 0 5rem;
-      border-bottom: 1px solid var(--border);
-      background:
-        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(47,129,247,0.15), transparent);
-    }
-
-    #hero .tagline {
-      font-size: clamp(2rem, 4vw, 3.25rem);
-      font-weight: 700;
-      line-height: 1.15;
-      letter-spacing: -0.02em;
-    }
-
-    #hero .sub {
-      font-size: 1.125rem;
-      color: var(--text-muted);
-      max-width: 560px;
-    }
-
-    .badge-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      font-size: 0.75rem;
-      font-weight: 600;
-      padding: 0.35rem 0.75rem;
-      border-radius: 2rem;
-      border: 1px solid var(--border);
-      background: var(--bg-surface);
-      color: var(--text-muted);
-    }
-
-    /* ── Cards ── */
-    .feature-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 0.75rem;
-      padding: 1.75rem;
-      height: 100%;
-      transition: border-color 0.2s, transform 0.2s;
-    }
-
-    .feature-card:hover {
-      border-color: var(--accent-dim);
-      transform: translateY(-2px);
-    }
-
-    .feature-card .icon {
-      font-size: 1.75rem;
-      color: var(--accent);
-      margin-bottom: 1rem;
-    }
-
-    .feature-card h5 {
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-    }
-
-    .feature-card p {
-      color: var(--text-muted);
-      font-size: 0.9rem;
-      margin: 0;
-    }
-
-    /* ── Architecture diagram ── */
-    #architecture img {
-      border: 1px solid var(--border);
-      border-radius: 0.75rem;
-      max-width: 100%;
-    }
-
-    /* ── Screenshots ── */
-    .screenshot {
-      border: 1px solid var(--border);
-      border-radius: 0.5rem;
-      max-width: 100%;
-    }
-
-    .screenshot-label {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      margin-top: 0.5rem;
-    }
-
-    /* ── Tech stack badges ── */
-    .tech-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 0.5rem;
-      padding: 0.5rem 0.9rem;
-      font-size: 0.82rem;
-      font-weight: 600;
-      color: var(--text-primary);
-      margin: 0.25rem;
-    }
-
-    /* ── Code block ── */
-    .code-block {
-      background: var(--bg-surface);
-      border: 1px solid var(--border);
-      border-radius: 0.5rem;
-      padding: 1.25rem 1.5rem;
-      font-size: 0.82rem;
-      overflow-x: auto;
-      color: #cdd9e5;
-    }
-
-    .code-block .k  { color: var(--purple); }
-    .code-block .v  { color: var(--green); }
-    .code-block .c  { color: var(--text-muted); font-style: italic; }
-
-    /* ── Footer ── */
-    footer {
-      background: var(--bg-surface);
-      border-top: 1px solid var(--border);
-      padding: 2.5rem 0;
-      color: var(--text-muted);
-      font-size: 0.85rem;
-    }
-
-    footer a {
-      color: var(--accent);
-      text-decoration: none;
-    }
-
-    footer a:hover {
-      text-decoration: underline;
-    }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <!-- Custom CSS -->
+  <link href="assets/css/style.css" rel="stylesheet" />
 </head>
 <body>
 
@@ -244,12 +22,7 @@
       <a class="navbar-brand" href="#hero">
         <i class="bi bi-diagram-3-fill me-1"></i>k8s-multi-cloud
       </a>
-      <button
-        class="navbar-toggler border-0"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navLinks"
-      >
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navLinks">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navLinks">
@@ -260,11 +33,7 @@
           <li class="nav-item"><a class="nav-link" href="#stack">Stack</a></li>
           <li class="nav-item"><a class="nav-link" href="#demo">Demo</a></li>
           <li class="nav-item ms-2">
-            <a
-              class="btn btn-sm btn-outline-secondary"
-              href="https://github.com/simonangel-fong/k8s-multi-cloud"
-              target="_blank"
-            >
+            <a class="btn btn-sm btn-outline-secondary" href="https://github.com/simonangel-fong/k8s-multi-cloud" target="_blank">
               <i class="bi bi-github me-1"></i>GitHub
             </a>
           </li>
@@ -276,34 +45,24 @@
   <!-- ── Hero ── -->
   <section id="hero">
     <div class="container">
-      <div class="mb-3 d-flex flex-wrap gap-2">
-        <span class="badge-pill"><i class="bi bi-cloud-fill" style="color:var(--orange)"></i> AWS EKS</span>
-        <span class="badge-pill"><i class="bi bi-cloud-fill" style="color:#0089d6"></i> Azure AKS</span>
-        <span class="badge-pill"><i class="bi bi-arrow-repeat" style="color:var(--green)"></i> GitOps</span>
-      </div>
+      <h1 class="tagline mb-2">Multi-cloud Cluster</h1>
 
-      <h1 class="tagline mb-3">
-        One app.<br>Two clouds.<br>
-        <span style="color:var(--accent)">GitOps end to end.</span>
-      </h1>
+      <p class="mb-3" style="font-size:1.35rem; font-weight:600; color:var(--accent);">
+        One app. Two clouds. GitOps end to end.
+      </p>
 
       <p class="sub mb-4">
-        A production-pattern project running a single application across
-        <strong>AWS EKS</strong> and <strong>Azure AKS</strong> with shared
-        observability and Cloudflare traffic control — all driven by ArgoCD.
+        A project that runs a single application across
+        <strong style="color:var(--text-primary)">AWS EKS</strong> and
+        <strong style="color:var(--text-primary)">Azure AKS</strong>
+        with shared observability and traffic control.
       </p>
 
       <div class="d-flex flex-wrap gap-3">
-        <a
-          href="https://github.com/simonangel-fong/k8s-multi-cloud"
-          target="_blank"
-          class="btn btn-primary"
-        >
+        <a href="https://github.com/simonangel-fong/k8s-multi-cloud" target="_blank" class="btn btn-primary">
           <i class="bi bi-github me-1"></i>View on GitHub
         </a>
-        <a href="#architecture" class="btn btn-outline-secondary">
-          <i class="bi bi-diagram-3 me-1"></i>Architecture
-        </a>
+        <a href="#challenge" class="btn btn-outline-secondary">See How It Works</a>
       </div>
     </div>
   </section>
@@ -377,35 +136,35 @@
       </p>
 
       <div class="text-center mb-5">
-        <img src="img/architecture.gif" alt="Architecture diagram" />
+        <img src="assets/img/architecture.gif" alt="Architecture diagram" />
       </div>
 
       <div class="row g-3">
         <div class="col-sm-6 col-lg-3">
           <div class="feature-card text-center">
             <div class="icon"><i class="bi bi-cloud"></i></div>
-            <h6 class="fw-700">Cloud Providers</h6>
+            <h6 class="fw-bold">Cloud Providers</h6>
             <p>AWS EKS &amp; Azure AKS as target clusters</p>
           </div>
         </div>
         <div class="col-sm-6 col-lg-3">
           <div class="feature-card text-center">
             <div class="icon"><i class="bi bi-arrow-repeat" style="color:var(--green)"></i></div>
-            <h6 class="fw-700">GitOps</h6>
+            <h6 class="fw-bold">GitOps</h6>
             <p>ArgoCD + Helm for declarative, automated deployments</p>
           </div>
         </div>
         <div class="col-sm-6 col-lg-3">
           <div class="feature-card text-center">
             <div class="icon"><i class="bi bi-activity" style="color:var(--orange)"></i></div>
-            <h6 class="fw-700">Observability</h6>
+            <h6 class="fw-bold">Observability</h6>
             <p>Grafana Cloud + Grafana Alloy for unified monitoring</p>
           </div>
         </div>
         <div class="col-sm-6 col-lg-3">
           <div class="feature-card text-center">
             <div class="icon"><i class="bi bi-shield-check" style="color:var(--purple)"></i></div>
-            <h6 class="fw-700">Traffic Control</h6>
+            <h6 class="fw-bold">Traffic Control</h6>
             <p>Cloudflare Load Balancer in front of both clusters</p>
           </div>
         </div>
@@ -423,7 +182,6 @@
       </p>
 
       <div class="row g-4">
-        <!-- Feature 1 -->
         <div class="col-md-4">
           <div class="feature-card">
             <div class="icon"><i class="bi bi-diagram-3"></i></div>
@@ -435,7 +193,6 @@
             </p>
           </div>
         </div>
-        <!-- Feature 2 -->
         <div class="col-md-4">
           <div class="feature-card">
             <div class="icon"><i class="bi bi-globe" style="color:var(--orange)"></i></div>
@@ -447,7 +204,6 @@
             </p>
           </div>
         </div>
-        <!-- Feature 3 -->
         <div class="col-md-4">
           <div class="feature-card">
             <div class="icon"><i class="bi bi-bar-chart-line" style="color:var(--green)"></i></div>
@@ -461,7 +217,6 @@
         </div>
       </div>
 
-      <!-- ApplicationSet excerpt -->
       <div class="mt-5">
         <p class="section-label">ApplicationSet — key excerpt</p>
         <div class="code-block">
@@ -496,26 +251,26 @@
       </p>
 
       <div class="mb-4">
-        <p class="text-uppercase fw-600" style="font-size:0.75rem; color:var(--text-muted); letter-spacing:0.1em;">Infrastructure</p>
+        <p class="text-uppercase fw-semibold" style="font-size:0.75rem; color:var(--text-muted); letter-spacing:0.1em;">Infrastructure</p>
         <span class="tech-badge"><i class="bi bi-cloud-fill" style="color:#FF9900"></i> AWS EKS</span>
         <span class="tech-badge"><i class="bi bi-cloud-fill" style="color:#0089d6"></i> Azure AKS</span>
         <span class="tech-badge"><i class="bi bi-layers" style="color:#7B42BC"></i> Terraform</span>
       </div>
 
       <div class="mb-4">
-        <p class="text-uppercase fw-600" style="font-size:0.75rem; color:var(--text-muted); letter-spacing:0.1em;">GitOps &amp; Delivery</p>
+        <p class="text-uppercase fw-semibold" style="font-size:0.75rem; color:var(--text-muted); letter-spacing:0.1em;">GitOps &amp; Delivery</p>
         <span class="tech-badge"><i class="bi bi-arrow-repeat" style="color:#EF7B4D"></i> ArgoCD</span>
         <span class="tech-badge"><i class="bi bi-box-seam" style="color:#0f1689"></i> Helm</span>
         <span class="tech-badge"><i class="bi bi-git" style="color:#F05032"></i> Git</span>
       </div>
 
       <div class="mb-4">
-        <p class="text-uppercase fw-600" style="font-size:0.75rem; color:var(--text-muted); letter-spacing:0.1em;">Networking</p>
+        <p class="text-uppercase fw-semibold" style="font-size:0.75rem; color:var(--text-muted); letter-spacing:0.1em;">Networking</p>
         <span class="tech-badge"><i class="bi bi-shield-check" style="color:#F38020"></i> Cloudflare</span>
       </div>
 
       <div>
-        <p class="text-uppercase fw-600" style="font-size:0.75rem; color:var(--text-muted); letter-spacing:0.1em;">Observability</p>
+        <p class="text-uppercase fw-semibold" style="font-size:0.75rem; color:var(--text-muted); letter-spacing:0.1em;">Observability</p>
         <span class="tech-badge"><i class="bi bi-bar-chart-fill" style="color:#F46800"></i> Grafana Cloud</span>
         <span class="tech-badge"><i class="bi bi-activity" style="color:#F46800"></i> Grafana Alloy</span>
       </div>
@@ -531,58 +286,54 @@
         Screenshots from a live run of the full stack.
       </p>
 
-      <!-- ArgoCD -->
       <h5 class="mb-3" style="color:var(--text-muted); font-size:0.85rem; letter-spacing:0.08em; text-transform:uppercase;">ArgoCD</h5>
       <div class="row g-3 mb-5">
         <div class="col-md-4">
-          <img src="img/argocd_ui01.png" class="screenshot" alt="ArgoCD clusters" />
+          <img src="assets/img/argocd_ui01.png" class="screenshot" alt="ArgoCD clusters" />
           <p class="screenshot-label">Clusters: AKS &amp; EKS registered</p>
         </div>
         <div class="col-md-4">
-          <img src="img/argocd_ui02.png" class="screenshot" alt="ArgoCD app list" />
+          <img src="assets/img/argocd_ui02.png" class="screenshot" alt="ArgoCD app list" />
           <p class="screenshot-label">Application list — prefixed by cluster name</p>
         </div>
         <div class="col-md-4">
-          <img src="img/argocd_ui03.png" class="screenshot" alt="ArgoCD app status" />
+          <img src="assets/img/argocd_ui03.png" class="screenshot" alt="ArgoCD app status" />
           <p class="screenshot-label">App status: Healthy &amp; Synced</p>
         </div>
       </div>
 
-      <!-- Grafana -->
       <h5 class="mb-3" style="color:var(--text-muted); font-size:0.85rem; letter-spacing:0.08em; text-transform:uppercase;">Grafana Cloud</h5>
       <div class="row g-3 mb-5">
         <div class="col-md-4">
-          <img src="img/grafana_dashboard01.png" class="screenshot" alt="Grafana dashboard 1" />
+          <img src="assets/img/grafana_dashboard01.png" class="screenshot" alt="Grafana dashboard 1" />
           <p class="screenshot-label">Dashboard overview</p>
         </div>
         <div class="col-md-4">
-          <img src="img/grafana_dashboard02.png" class="screenshot" alt="Grafana dashboard 2" />
+          <img src="assets/img/grafana_dashboard02.png" class="screenshot" alt="Grafana dashboard 2" />
           <p class="screenshot-label">Metrics across both clusters</p>
         </div>
         <div class="col-md-4">
-          <img src="img/grafana_log.png" class="screenshot" alt="Grafana logs" />
+          <img src="assets/img/grafana_log.png" class="screenshot" alt="Grafana logs" />
           <p class="screenshot-label">Unified log view</p>
         </div>
       </div>
 
-      <!-- Cloud UIs -->
       <h5 class="mb-3" style="color:var(--text-muted); font-size:0.85rem; letter-spacing:0.08em; text-transform:uppercase;">Cloud Consoles</h5>
       <div class="row g-3 mb-5">
         <div class="col-md-6">
-          <img src="img/aws_eks_ui01.png" class="screenshot" alt="AWS EKS" />
+          <img src="assets/img/aws_eks_ui01.png" class="screenshot" alt="AWS EKS" />
           <p class="screenshot-label">AWS EKS cluster</p>
         </div>
         <div class="col-md-6">
-          <img src="img/azure_aks_ui01.png" class="screenshot" alt="Azure AKS" />
+          <img src="assets/img/azure_aks_ui01.png" class="screenshot" alt="Azure AKS" />
           <p class="screenshot-label">Azure AKS cluster</p>
         </div>
       </div>
 
-      <!-- Cloudflare -->
       <h5 class="mb-3" style="color:var(--text-muted); font-size:0.85rem; letter-spacing:0.08em; text-transform:uppercase;">Cloudflare Load Balancer</h5>
       <div class="row g-3">
         <div class="col-md-8">
-          <img src="img/cloudflare_lb_ui01.png" class="screenshot" alt="Cloudflare LB" />
+          <img src="assets/img/cloudflare_lb_ui01.png" class="screenshot" alt="Cloudflare LB" />
           <p class="screenshot-label">Load balancer routing across EKS &amp; AKS</p>
         </div>
       </div>
@@ -593,7 +344,7 @@
   <footer>
     <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
       <div>
-        <span class="fw-600" style="color:var(--text-primary)">k8s-multi-cloud</span>
+        <span class="fw-semibold" style="color:var(--text-primary)">k8s-multi-cloud</span>
         &nbsp;·&nbsp; Built by
         <a href="https://github.com/simonangel-fong" target="_blank">simonangel-fong</a>
       </div>
@@ -607,29 +358,8 @@
 
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-  <!-- Active nav link on scroll -->
-  <script>
-    const sections = document.querySelectorAll("section[id]");
-    const navLinks = document.querySelectorAll("#mainNav .nav-link[href^='#']");
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            navLinks.forEach((l) => l.classList.remove("active"));
-            const active = document.querySelector(
-              `#mainNav .nav-link[href="#${entry.target.id}"]`
-            );
-            if (active) active.classList.add("active");
-          }
-        });
-      },
-      { rootMargin: "-40% 0px -55% 0px" }
-    );
-
-    sections.forEach((s) => observer.observe(s));
-  </script>
+  <!-- Custom JS -->
+  <script src="assets/js/main.js"></script>
 
 </body>
 </html>
