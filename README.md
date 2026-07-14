@@ -1,4 +1,4 @@
-# Project: Kubernetes Multicloud with GitOps
+# Multi-cloud Cluster with GitOps
 
 > One app. Two clouds. GitOps end to end.
 
@@ -7,7 +7,7 @@ A project that runs a single application across `AWS EKS` and `Azure AKS` with s
 ![Kubernetes](https://img.shields.io/badge/Kubernetes-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white&style=plastic) ![Helm](https://img.shields.io/badge/helm-%230F1689.svg?style=for-the-badge&logo=helm&logoColor=white&style=plastic) ![Argo CD](https://img.shields.io/badge/Argo%20CD-EF7B4D?style=for-the-badge&logo=argo&logoColor=white&style=plastic) <br>
 ![AWS](https://img.shields.io/badge/AWS-FF9900?style=for-the-badge&logo=amazonwebservices&logoColor=white&style=plastic) ![Microsoft Azure](https://custom-icon-badges.demolab.com/badge/Microsoft%20Azure-0089D6?logo=msazure&logoColor=white&style=plastic) ![Cloudflare](https://img.shields.io/badge/Cloudflare-F38020?style=for-the-badge&logo=Cloudflare&logoColor=white&style=plastic) ![Terraform](https://img.shields.io/badge/Terraform-7B42BC?style=for-the-badge&logo=terraform&logoColor=white&style=plastic)
 
-- [Project: Kubernetes Multicloud with GitOps](#project-kubernetes-multicloud-with-gitops)
+- [Multi-cloud Cluster with GitOps](#multi-cloud-cluster-with-gitops)
   - [Challenge: `Kubernetes multicloud`](#challenge-kubernetes-multicloud)
   - [Architecture Diagram](#architecture-diagram)
   - [Feature: one application across multiple clouds](#feature-one-application-across-multiple-clouds)
