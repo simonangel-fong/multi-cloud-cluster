@@ -20,8 +20,47 @@ body {
   color: var(--text-primary);
 }
 
+.container {
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+@media (min-width: 992px) {
+  .container {
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
+}
+
 code, pre, .mono {
   font-family: "JetBrains Mono", monospace;
+}
+
+/* ── Utility ── */
+.text-emphasis  { color: var(--text-primary); }
+.text-green     { color: var(--green); }
+.text-orange    { color: var(--orange); }
+
+/* ── Typography ── */
+.body-text {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.75;
+  max-width: 720px;
+}
+
+.body-list {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 2;
+  max-width: 720px;
+  padding-left: 1.25rem;
+}
+
+.subsection-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
 }
 
 /* ── Navbar ── */
@@ -56,25 +95,11 @@ section {
   border-bottom: 1px solid var(--border);
 }
 
-.section-label {
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 0.5rem;
-}
-
 .section-title {
   font-size: 2rem;
   font-weight: 700;
   color: var(--text-primary);
   margin-bottom: 1rem;
-}
-
-.section-lead {
-  color: var(--text-muted);
-  max-width: 640px;
 }
 
 /* ── Hero ── */
@@ -89,17 +114,59 @@ section {
     url("../img/bg-image.jpg") center / cover no-repeat;
 }
 
-#hero .tagline {
+.tagline {
   font-size: clamp(2rem, 4vw, 3.25rem);
   font-weight: 700;
   line-height: 1.15;
   letter-spacing: -0.02em;
 }
 
-#hero .sub {
+.hero-subtitle {
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.hero-desc {
   font-size: 1.125rem;
   color: var(--text-muted);
   max-width: 560px;
+}
+
+/* ── Challenge blockquote ── */
+.challenge-quote {
+  border-left: 3px solid var(--accent);
+  padding-left: 1.25rem;
+  margin: 0 0 2rem;
+}
+
+.challenge-question {
+  color: var(--text-primary);
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* ── Images ── */
+.section-img {
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  width: 100%;
+  max-width: 100%;
+}
+
+.screenshot {
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  width: 100%;
+  max-width: 100%;
+}
+
+.screenshot-label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 0.5rem;
+  text-align: center;
 }
 
 /* ── Cards ── */
@@ -132,26 +199,6 @@ section {
   color: var(--text-muted);
   font-size: 0.9rem;
   margin: 0;
-}
-
-/* ── Architecture diagram ── */
-#architecture img {
-  border: 1px solid var(--border);
-  border-radius: 0.75rem;
-  max-width: 100%;
-}
-
-/* ── Screenshots ── */
-.screenshot {
-  border: 1px solid var(--border);
-  border-radius: 0.5rem;
-  max-width: 100%;
-}
-
-.screenshot-label {
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  margin-top: 0.5rem;
 }
 
 /* ── Tech stack badges ── */

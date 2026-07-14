@@ -6,7 +6,7 @@
   <title>Multi-cloud Cluster with GitOps</title>
 
   <!-- Bootstrap 5 -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" />
   <!-- Bootstrap Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
   <!-- Google Fonts -->
@@ -28,10 +28,9 @@
       <div class="collapse navbar-collapse" id="navLinks">
         <ul class="navbar-nav ms-auto gap-1">
           <li class="nav-item"><a class="nav-link" href="#challenge">Challenge</a></li>
-          <li class="nav-item"><a class="nav-link" href="#architecture">Architecture</a></li>
-          <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
-          <li class="nav-item"><a class="nav-link" href="#stack">Stack</a></li>
-          <li class="nav-item"><a class="nav-link" href="#demo">Demo</a></li>
+          <li class="nav-item"><a class="nav-link" href="#feature-deploy">Multi-cloud Deploy</a></li>
+          <li class="nav-item"><a class="nav-link" href="#feature-traffic">Traffic Control</a></li>
+          <li class="nav-item"><a class="nav-link" href="#feature-monitoring">Monitoring</a></li>
           <li class="nav-item ms-2">
             <a class="btn btn-sm btn-outline-secondary" href="https://github.com/simonangel-fong/k8s-multi-cloud" target="_blank">
               <i class="bi bi-github me-1"></i>GitHub
@@ -47,14 +46,14 @@
     <div class="container">
       <h1 class="tagline mb-2">Multi-cloud Cluster</h1>
 
-      <p class="mb-3" style="font-size:1.35rem; font-weight:600; color:var(--accent);">
+      <p class="hero-subtitle mb-3">
         One app. Two clouds. GitOps end to end.
       </p>
 
-      <p class="sub mb-4">
+      <p class="hero-desc mb-4">
         A project that runs a single application across
-        <strong style="color:var(--text-primary)">AWS EKS</strong> and
-        <strong style="color:var(--text-primary)">Azure AKS</strong>
+        <strong class="text-emphasis">AWS EKS</strong> and
+        <strong class="text-emphasis">Azure AKS</strong>
         with shared observability and traffic control.
       </p>
 
@@ -67,274 +66,143 @@
     </div>
   </section>
 
-  <!-- ── Challenge ── -->
+  <!-- ── Challenge & Solution ── -->
   <section id="challenge">
     <div class="container">
-      <p class="section-label">01 — Challenge</p>
-      <h2 class="section-title">Kubernetes Multicloud</h2>
-      <p class="section-lead mb-5">
-        The practice of deploying and managing Kubernetes clusters across multiple
-        cloud providers simultaneously — and making it operationally sustainable.
+      <h2 class="section-title">Business Challenge &amp; Solution</h2>
+
+      <p class="body-text">
+        Relying on a single cloud provider is a hidden business risk, because:
       </p>
+      <ul class="body-list mb-4">
+        <li>A single provider outage takes the entire service offline with no fallback and no warning</li>
+        <li>Pricing increases or contract changes leave the business with no negotiating power</li>
+        <li>Migrating to another provider later means months of costly re-engineering</li>
+      </ul>
 
-      <div class="row g-4 mb-5">
-        <div class="col-md-6">
-          <div class="feature-card">
-            <div class="icon"><i class="bi bi-question-circle"></i></div>
-            <h5>Why multi-cloud?</h5>
-            <ul class="mb-0" style="color:var(--text-muted); font-size:0.9rem; padding-left:1.25rem;">
-              <li><strong style="color:var(--text-primary)">Resilience</strong> — survive a regional or provider-level outage</li>
-              <li><strong style="color:var(--text-primary)">Vendor flexibility</strong> — avoid lock-in, negotiate from a stronger position</li>
-              <li><strong style="color:var(--text-primary)">Workload placement</strong> — put each workload where it is cheapest or closest to data</li>
-              <li><strong style="color:var(--text-primary)">Cost optimization</strong> — combine each provider's savings plans</li>
-            </ul>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="feature-card">
-            <div class="icon"><i class="bi bi-exclamation-triangle" style="color:var(--orange)"></i></div>
-            <h5>Trade-offs</h5>
-            <ul class="mb-0" style="color:var(--text-muted); font-size:0.9rem; padding-left:1.25rem;">
-              <li><strong style="color:var(--text-primary)">Operational overhead</strong> — multiple control planes, IAM models, networking stacks</li>
-              <li><strong style="color:var(--text-primary)">Cost of consistency</strong> — keeping clusters, manifests, and observability in sync requires extra tooling and discipline</li>
-            </ul>
-          </div>
-        </div>
-      </div>
+      <blockquote class="challenge-quote mb-5">
+        <p class="challenge-question">
+          How do businesses protect themselves from cloud dependency?
+        </p>
+      </blockquote>
 
-      <p class="section-label">Real-world examples</p>
-      <div class="row g-3">
-        <div class="col-md-6">
-          <div class="code-block">
-            <span class="c"># Cost relief from lock-in</span><br>
-            Soaring infrastructure costs from a single cloud<br>
-            can be reduced by combining each provider's<br>
-            <span class="v">savings plans</span> in a multicloud setup.
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="code-block">
-            <span class="c"># Compliance &amp; operational flexibility</span><br>
-            Microsoft 365-integrated workloads → <span class="v">Azure</span><br>
-            High-performance batch jobs → <span class="v">AWS</span><br>
-            Each cloud where it is <span class="v">strongest</span>.
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── Architecture ── -->
-  <section id="architecture">
-    <div class="container">
-      <p class="section-label">02 — Architecture</p>
-      <h2 class="section-title">System Overview</h2>
-      <p class="section-lead mb-5">
-        A single ArgoCD ApplicationSet fans out to both EKS and AKS, selecting
-        cloud-specific Helm values per cluster. Cloudflare sits in front of both
-        for load balancing. Grafana Cloud collects metrics from both clusters via Alloy.
+      <p class="body-text">
+        This project solves the problem by:
       </p>
+      <ul class="body-list mb-5">
+        <li>Creating multi-cloud clusters on <strong class="text-emphasis">AWS EKS</strong> and <strong class="text-emphasis">Azure AKS</strong> using Terraform</li>
+        <li>Deploying an application across both clusters simultaneously</li>
+        <li>Applying GitOps practices to automate and standardise deployment</li>
+      </ul>
 
-      <div class="text-center mb-5">
-        <img src="assets/img/architecture.gif" alt="Architecture diagram" />
-      </div>
-
-      <div class="row g-3">
-        <div class="col-sm-6 col-lg-3">
-          <div class="feature-card text-center">
-            <div class="icon"><i class="bi bi-cloud"></i></div>
-            <h6 class="fw-bold">Cloud Providers</h6>
-            <p>AWS EKS &amp; Azure AKS as target clusters</p>
-          </div>
-        </div>
-        <div class="col-sm-6 col-lg-3">
-          <div class="feature-card text-center">
-            <div class="icon"><i class="bi bi-arrow-repeat" style="color:var(--green)"></i></div>
-            <h6 class="fw-bold">GitOps</h6>
-            <p>ArgoCD + Helm for declarative, automated deployments</p>
-          </div>
-        </div>
-        <div class="col-sm-6 col-lg-3">
-          <div class="feature-card text-center">
-            <div class="icon"><i class="bi bi-activity" style="color:var(--orange)"></i></div>
-            <h6 class="fw-bold">Observability</h6>
-            <p>Grafana Cloud + Grafana Alloy for unified monitoring</p>
-          </div>
-        </div>
-        <div class="col-sm-6 col-lg-3">
-          <div class="feature-card text-center">
-            <div class="icon"><i class="bi bi-shield-check" style="color:var(--purple)"></i></div>
-            <h6 class="fw-bold">Traffic Control</h6>
-            <p>Cloudflare Load Balancer in front of both clusters</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── Features ── -->
-  <section id="features">
-    <div class="container">
-      <p class="section-label">03 — Features</p>
-      <h2 class="section-title">What This Project Demonstrates</h2>
-      <p class="section-lead mb-5">
-        Three end-to-end capabilities, each built on real tooling with production-grade patterns.
-      </p>
-
+      <!-- Benefits & Trade-offs -->
       <div class="row g-4">
-        <div class="col-md-4">
-          <div class="feature-card">
-            <div class="icon"><i class="bi bi-diagram-3"></i></div>
-            <h5>Multi-cloud Deploy</h5>
-            <p>
-              A single <code>ArgoCD ApplicationSet</code> fans out to both EKS and AKS using the
-              clusters generator. Cloud-specific Helm values are selected per cluster
-              via the <code>cloud</code> label.
-            </p>
-          </div>
+        <div class="col-md-6">
+          <h3 class="subsection-title text-green">Benefits</h3>
+          <ul class="body-list">
+            <li><strong class="text-emphasis">Resilience</strong> Survive a regional or provider-level outage without service interruption.</li>
+            <li><strong class="text-emphasis">Cost control</strong> Combine savings plans across providers and avoid lock-in pricing.</li>
+            <li><strong class="text-emphasis">Flexibility</strong> Place each workload on the cloud where it performs best.</li>
+          </ul>
         </div>
-        <div class="col-md-4">
-          <div class="feature-card">
-            <div class="icon"><i class="bi bi-globe" style="color:var(--orange)"></i></div>
-            <h5>Traffic Control</h5>
-            <p>
-              Cloudflare Load Balancer routes traffic across both clusters with
-              health checks, failover, and geo-routing — giving resilience at the
-              DNS layer without touching the application.
-            </p>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="feature-card">
-            <div class="icon"><i class="bi bi-bar-chart-line" style="color:var(--green)"></i></div>
-            <h5>Unified Observability</h5>
-            <p>
-              Grafana Alloy scrapes metrics and logs from both clusters and ships
-              them to a single <code>Grafana Cloud</code> workspace — one dashboard,
-              two clouds.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div class="mt-5">
-        <p class="section-label">ApplicationSet — key excerpt</p>
-        <div class="code-block">
-<span class="k">apiVersion</span>: argoproj.io/v1alpha1<br>
-<span class="k">kind</span>: ApplicationSet<br>
-<span class="k">spec</span>:<br>
-&nbsp;&nbsp;<span class="k">generators</span>:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;- <span class="k">clusters</span>:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">selector</span>:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">matchLabels</span>:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="v">workload</span>: demo-api<br>
-&nbsp;&nbsp;<span class="k">template</span>:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">spec</span>:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">source</span>:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">helm</span>:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">valueFiles</span>:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- <span class="v">'values-{{ index .metadata.labels "cloud" }}.yaml'</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">destination</span>:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">server</span>: <span class="v">"{{ .server }}"</span>
+        <div class="col-md-6">
+          <h3 class="subsection-title text-orange">Trade-offs</h3>
+          <ul class="body-list">
+            <li><strong class="text-emphasis">More moving parts</strong> Multiple control planes and networking stacks to manage across providers.</li>
+            <li><strong class="text-emphasis">Consistency overhead</strong> Keeping both environments in sync requires extra tooling and discipline.</li>
+          </ul>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ── Tech Stack ── -->
-  <section id="stack">
+  <!-- ── Feature: Multi-cloud Deploy ── -->
+  <section id="feature-deploy">
     <div class="container">
-      <p class="section-label">04 — Stack</p>
-      <h2 class="section-title">Technologies Used</h2>
-      <p class="section-lead mb-5">
-        Every component is open-source or a managed cloud service — nothing proprietary.
-      </p>
+      <h2 class="section-title">Feature: Multi-cloud Deploy</h2>
 
-      <div class="mb-4">
-        <p class="text-uppercase fw-semibold" style="font-size:0.75rem; color:var(--text-muted); letter-spacing:0.1em;">Infrastructure</p>
-        <span class="tech-badge"><i class="bi bi-cloud-fill" style="color:#FF9900"></i> AWS EKS</span>
-        <span class="tech-badge"><i class="bi bi-cloud-fill" style="color:#0089d6"></i> Azure AKS</span>
-        <span class="tech-badge"><i class="bi bi-layers" style="color:#7B42BC"></i> Terraform</span>
+      <!-- Architecture diagram -->
+      <div class="text-center mb-5">
+        <img src="assets/img/architecture.gif" alt="Architecture diagram" class="section-img" />
       </div>
 
-      <div class="mb-4">
-        <p class="text-uppercase fw-semibold" style="font-size:0.75rem; color:var(--text-muted); letter-spacing:0.1em;">GitOps &amp; Delivery</p>
-        <span class="tech-badge"><i class="bi bi-arrow-repeat" style="color:#EF7B4D"></i> ArgoCD</span>
-        <span class="tech-badge"><i class="bi bi-box-seam" style="color:#0f1689"></i> Helm</span>
-        <span class="tech-badge"><i class="bi bi-git" style="color:#F05032"></i> Git</span>
-      </div>
+      <!-- How it works -->
+      <h3 class="subsection-title text-emphasis">How it works</h3>
+      <ol class="body-list mb-5">
+        <li><strong class="text-emphasis">Register the clusters</strong> AWS EKS and Azure AKS are registered in ArgoCD, each labelled with its cloud provider</li>
+        <li><strong class="text-emphasis">One config, two targets</strong> A single ArgoCD ApplicationSet reads those labels and deploys to every matching cluster automatically</li>
+        <li><strong class="text-emphasis">Cloud-specific settings</strong> Each cluster receives its own Helm values, so cloud differences are handled without duplicating code</li>
+      </ol>
 
-      <div class="mb-4">
-        <p class="text-uppercase fw-semibold" style="font-size:0.75rem; color:var(--text-muted); letter-spacing:0.1em;">Networking</p>
-        <span class="tech-badge"><i class="bi bi-shield-check" style="color:#F38020"></i> Cloudflare</span>
-      </div>
-
-      <div>
-        <p class="text-uppercase fw-semibold" style="font-size:0.75rem; color:var(--text-muted); letter-spacing:0.1em;">Observability</p>
-        <span class="tech-badge"><i class="bi bi-bar-chart-fill" style="color:#F46800"></i> Grafana Cloud</span>
-        <span class="tech-badge"><i class="bi bi-activity" style="color:#F46800"></i> Grafana Alloy</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── Demo / Screenshots ── -->
-  <section id="demo">
-    <div class="container">
-      <p class="section-label">05 — Demo</p>
-      <h2 class="section-title">In Action</h2>
-      <p class="section-lead mb-5">
-        Screenshots from a live run of the full stack.
-      </p>
-
-      <h5 class="mb-3" style="color:var(--text-muted); font-size:0.85rem; letter-spacing:0.08em; text-transform:uppercase;">ArgoCD</h5>
-      <div class="row g-3 mb-5">
-        <div class="col-md-4">
-          <img src="assets/img/argocd_ui01.png" class="screenshot" alt="ArgoCD clusters" />
-          <p class="screenshot-label">Clusters: AKS &amp; EKS registered</p>
-        </div>
-        <div class="col-md-4">
+      <!-- Screenshots -->
+      <div class="d-flex flex-column gap-4">
+        <div>
           <img src="assets/img/argocd_ui02.png" class="screenshot" alt="ArgoCD app list" />
-          <p class="screenshot-label">Application list — prefixed by cluster name</p>
+          <p class="screenshot-label">Application list: prefixed with cluster name</p>
         </div>
-        <div class="col-md-4">
+        <div>
           <img src="assets/img/argocd_ui03.png" class="screenshot" alt="ArgoCD app status" />
-          <p class="screenshot-label">App status: Healthy &amp; Synced</p>
+          <p class="screenshot-label">Application: Healthy and Synced</p>
         </div>
       </div>
 
-      <h5 class="mb-3" style="color:var(--text-muted); font-size:0.85rem; letter-spacing:0.08em; text-transform:uppercase;">Grafana Cloud</h5>
-      <div class="row g-3 mb-5">
-        <div class="col-md-4">
-          <img src="assets/img/grafana_dashboard01.png" class="screenshot" alt="Grafana dashboard 1" />
-          <p class="screenshot-label">Dashboard overview</p>
+    </div>
+  </section>
+
+  <!-- ── Feature: Traffic Control ── -->
+  <section id="feature-traffic">
+    <div class="container">
+      <h2 class="section-title">Feature: Traffic Control</h2>
+
+      <ul class="body-list mb-5">
+        <li>A Cloudflare Load Balancer sits in front of both clusters and steers traffic between the AWS and Azure pools</li>
+        <li>Adjusting the pool weights shifts load between clouds without touching DNS or the clusters themselves, which is useful for cost control, failover drills, and gradual cutovers</li>
+      </ul>
+
+      <div class="d-flex flex-column gap-4">
+        <div>
+          <img src="assets/img/cloudflare_lb_ui01.png" class="screenshot" alt="Cloudflare Load Balancer UI" />
+          <p class="screenshot-label">Cloudflare UI</p>
         </div>
-        <div class="col-md-4">
-          <img src="assets/img/grafana_dashboard02.png" class="screenshot" alt="Grafana dashboard 2" />
-          <p class="screenshot-label">Metrics across both clusters</p>
+        <div>
+          <img src="assets/img/test01.png" class="screenshot" alt="Test script" />
+          <p class="screenshot-label">Test script</p>
         </div>
-        <div class="col-md-4">
-          <img src="assets/img/grafana_log.png" class="screenshot" alt="Grafana logs" />
-          <p class="screenshot-label">Unified log view</p>
+        <div>
+          <img src="assets/img/test02.png" class="screenshot" alt="Test result" />
+          <p class="screenshot-label">21:78 matches the load balancing configuration (2:8)</p>
         </div>
       </div>
+    </div>
+  </section>
 
-      <h5 class="mb-3" style="color:var(--text-muted); font-size:0.85rem; letter-spacing:0.08em; text-transform:uppercase;">Cloud Consoles</h5>
-      <div class="row g-3 mb-5">
-        <div class="col-md-6">
-          <img src="assets/img/aws_eks_ui01.png" class="screenshot" alt="AWS EKS" />
-          <p class="screenshot-label">AWS EKS cluster</p>
-        </div>
-        <div class="col-md-6">
-          <img src="assets/img/azure_aks_ui01.png" class="screenshot" alt="Azure AKS" />
-          <p class="screenshot-label">Azure AKS cluster</p>
-        </div>
-      </div>
+  <!-- ── Feature: Cloud-agnostic Monitoring ── -->
+  <section id="feature-monitoring">
+    <div class="container">
+      <h2 class="section-title">Feature: Cloud-agnostic Monitoring</h2>
 
-      <h5 class="mb-3" style="color:var(--text-muted); font-size:0.85rem; letter-spacing:0.08em; text-transform:uppercase;">Cloudflare Load Balancer</h5>
-      <div class="row g-3">
-        <div class="col-md-8">
-          <img src="assets/img/cloudflare_lb_ui01.png" class="screenshot" alt="Cloudflare LB" />
-          <p class="screenshot-label">Load balancer routing across EKS &amp; AKS</p>
+      <p class="body-text mb-4">
+        Both clusters ship metrics and logs to a single Grafana Cloud workspace, making monitoring cloud-agnostic.
+      </p>
+
+      <ul class="body-list mb-5">
+        <li>The demo API exports Prometheus metrics</li>
+        <li>Grafana Alloy runs in each cluster and forwards metrics and logs to Grafana Cloud</li>
+        <li>Grafana Cloud dashboards render data from both clusters side by side</li>
+      </ul>
+
+      <div class="d-flex flex-column gap-4">
+        <div>
+          <img src="assets/img/grafana_dashboard01.png" class="screenshot" alt="Cluster overview" />
+          <p class="screenshot-label">Cluster Overview</p>
+        </div>
+        <div>
+          <img src="assets/img/grafana_dashboard02.png" class="screenshot" alt="Cluster list" />
+          <p class="screenshot-label">Cluster list</p>
+        </div>
+        <div>
+          <img src="assets/img/grafana_dashboard03.png" class="screenshot" alt="Cluster EKS" />
+          <p class="screenshot-label">Cluster: eks</p>
         </div>
       </div>
     </div>
@@ -344,7 +212,7 @@
   <footer>
     <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
       <div>
-        <span class="fw-semibold" style="color:var(--text-primary)">k8s-multi-cloud</span>
+        <span class="fw-semibold text-emphasis">k8s-multi-cloud</span>
         &nbsp;·&nbsp; Built by
         <a href="https://github.com/simonangel-fong" target="_blank">simonangel-fong</a>
       </div>
@@ -357,7 +225,7 @@
   </footer>
 
   <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
   <!-- Custom JS -->
   <script src="assets/js/main.js"></script>
 
